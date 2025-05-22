@@ -10,9 +10,13 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image("sw")
-            Text("The Lion King")
+            Image(systemName: "swift")
+                .resizable()
+                .frame(width: 50, height: 50)
+            Text("SwiftUI")
+                .font(.largeTitle)
         }
+        .foregroundStyle(.blue)
         .padding()
     }
 }
