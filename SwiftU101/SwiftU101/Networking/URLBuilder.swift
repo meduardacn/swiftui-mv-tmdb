@@ -24,8 +24,26 @@ struct BaseURLBuilder: URLBuilder {
     }
 }
 
+struct ImageURLBuilder: URLBuilder {
+    let path: String
+
+    func buildUrl() throws -> URL {
+
+        guard let url = URL(string: "https://image.tmdb.org/t/p/original/\(path)") else {
+            throw NetworkError.invalidUrl
+        }
+        return url
+    }
+}
+
 extension URLBuilder where Self == BaseURLBuilder {
     static func url(path: String) -> Self {
         BaseURLBuilder(path: path)
+    }
+}
+
+extension URLBuilder where Self == ImageURLBuilder {
+    static func imageUrl(path: String) -> Self {
+        ImageURLBuilder(path: path)
     }
 }

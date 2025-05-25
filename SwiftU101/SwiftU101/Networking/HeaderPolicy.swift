@@ -15,6 +15,10 @@ public protocol HeaderPolicy: Sendable {
     func generateHeaders() throws -> [String: String]
 }
 
+struct EmptyHeaderPolicy: HeaderPolicy {
+    func generateHeaders() throws -> [String: String] { [:] }
+}
+
 struct PrimaryPolicy: HeaderPolicy {
 
     let apiKey: String
@@ -31,6 +35,10 @@ struct PrimaryPolicy: HeaderPolicy {
         ]
         return headers
     }
+}
+
+extension HeaderPolicy where Self == EmptyHeaderPolicy {
+    static var empty: Self { .init() }
 }
 
 extension HeaderPolicy where Self == PrimaryPolicy {
