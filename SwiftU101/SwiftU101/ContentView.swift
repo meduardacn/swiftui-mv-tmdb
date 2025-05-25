@@ -10,19 +10,24 @@ import UIKit
 
 struct ContentView: View {
     let network = NetworkClient()
+    @State private var loadedImage: UIImage?
 
     var body: some View {
         VStack {
-            Image(systemName: "swift")
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text("SwiftUI")
-                .font(.largeTitle)
+            if let image = loadedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 200)
+            } else {
+                ProgressView()
+                    .frame(height: 200)
+            }
         }
         .task {
             do {
                 let image: UIImage = try await network.image(for: .fetchImage(filePath: "wwemzKWzjKYJFfCeiB57q3r4Bcm.png"))
-                let some = Image(uiImage: image)
+                loadedImage = image
             } catch {
                 print(error)
             }
