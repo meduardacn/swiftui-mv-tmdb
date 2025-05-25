@@ -30,7 +30,7 @@ struct NetworkClient: Sendable {
         guard let endpoint = endpoint else { throw NetworkError.endpointError }
         return try await response(for: endpoint) { data in
             let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
+            decoder.dateDecodingStrategy = .formatted(.movieDateFormatter)
             return try decoder.decode(Response.self, from: data)
         }
     }

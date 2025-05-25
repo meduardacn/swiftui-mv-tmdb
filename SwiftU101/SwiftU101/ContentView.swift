@@ -9,16 +9,19 @@ import SwiftUI
 import UIKit
 
 struct ContentView: View {
-    let network = NetworkClient()
-    @State private var loadedImage: UIImage?
+    let service = MovieDBMoviesService()
+    @State private var movies: [Movie]?
 
     var body: some View {
         VStack {
-            if let image = loadedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 200)
+            if let movies = movies, !movies.isEmpty {
+                List(movies) { movie in
+                    Text(movie.title)
+                    movie.posterImage
+                        .resizable()
+                        .frame(height: 200)
+
+                }
             } else {
                 ProgressView()
                     .frame(height: 200)
@@ -26,8 +29,7 @@ struct ContentView: View {
         }
         .task {
             do {
-                let image: UIImage = try await network.image(for: .fetchImage(filePath: "wwemzKWzjKYJFfCeiB57q3r4Bcm.png"))
-                loadedImage = image
+                try await movies = service.fetchPopularMovies(page: 1)
             } catch {
                 print(error)
             }

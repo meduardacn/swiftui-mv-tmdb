@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct Movie: Sendable {
+public struct Movie: Sendable, Identifiable {
     public let id: Int
     public let title: String
     public let overview: String
