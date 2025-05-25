@@ -36,4 +36,25 @@ extension Endpoint {
             method: .get([.query([language])])
         )
     }
+
+    static func searchMovies(query: String, page: Int) -> Endpoint {
+        let query = URLQueryItem(name: "query", value: "\(query)")
+        let language = URLQueryItem(name: "language", value: "en-US")
+        let adults = URLQueryItem(name: "include_adult", value: "false")
+        let page = URLQueryItem(name: "page", value: "\(page)")
+        return Endpoint(
+            url: .url(path: "search/movie"),
+            headers: .primary,
+            method: .get([.query([query, language, adults, page])])
+        )
+    }
+
+    static func fetchMoviesGenres() -> Endpoint {
+        return Endpoint(
+            url: .url(path: "genre/movie/list"),
+            headers: .primary,
+            method: .get()
+        )
+    }
+    
 }
