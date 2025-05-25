@@ -15,3 +15,10 @@ struct GenresDTO: Decodable, Encodable {
         let name: String
     }
 }
+
+extension Genre {
+    init (from dto: GenresDTO.ResultsDTO) {
+        id = dto.id
+        name = dto.name
+    }
+}

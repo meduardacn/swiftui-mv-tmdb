@@ -5,6 +5,9 @@
 //  Created by Maria Casanova on 5/25/25.
 //
 
+import Foundation
+import SwiftUI
+
 struct MoviesDTO: Decodable, Encodable {
     let dates: DatesDTO?
     let page: Int
@@ -27,10 +30,22 @@ struct MoviesDTO: Decodable, Encodable {
         let overview: String
         let popularity: Double
         let poster_path: String
-        let release_date: String
+        let release_date: Date
         let title: String
         let video: Bool
         let vote_average: Double
         let vote_count: Int
+    }
+}
+
+extension Movie {
+    init (from dto: MoviesDTO.MovieDTO, image: Image, genres: [Genre]) {
+        self.id = dto.id
+        self.title = dto.title
+        self.overview = dto.overview
+        self.releaseDate = dto.release_date
+        self.voteAverage = dto.vote_average
+        self.genres = genres
+        self.posterImage = image
     }
 }

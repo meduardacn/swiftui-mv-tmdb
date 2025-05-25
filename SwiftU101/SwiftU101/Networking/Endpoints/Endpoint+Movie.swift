@@ -8,7 +8,7 @@
 import Foundation
 
 extension Endpoint {
-    static func fetchNowPlayingMovies(page: Int) -> Endpoint {
+    static func fetchNowPlayingMovies(with page: Int) -> Endpoint {
         let language = URLQueryItem(name: "language", value: "en-US")
         let page = URLQueryItem(name: "page", value: "\(page)")
         return Endpoint(
@@ -18,7 +18,7 @@ extension Endpoint {
         )
     }
 
-    static func fetchPopularMovies(page: Int) -> Endpoint {
+    static func fetchPopularMovies(with page: Int) -> Endpoint {
         let language = URLQueryItem(name: "language", value: "en-US")
         let page = URLQueryItem(name: "page", value: "\(page)")
         return Endpoint(
@@ -28,7 +28,7 @@ extension Endpoint {
         )
     }
 
-    static func fetchMovieDetails(movieId: Int) -> Endpoint {
+    static func fetchMovieDetails(with movieId: Int) -> Endpoint {
         let language = URLQueryItem(name: "language", value: "en-US")
         return Endpoint(
             url: .url(path: "movie/\(movieId)"),
@@ -37,7 +37,7 @@ extension Endpoint {
         )
     }
 
-    static func searchMovies(query: String, page: Int) -> Endpoint {
+    static func searchMovies(for query: String, with page: Int) -> Endpoint {
         let query = URLQueryItem(name: "query", value: "\(query)")
         let language = URLQueryItem(name: "language", value: "en-US")
         let adults = URLQueryItem(name: "include_adult", value: "false")
