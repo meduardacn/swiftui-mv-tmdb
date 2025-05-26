@@ -23,9 +23,9 @@ struct MovieCard: View {
         }
     }
 
-    var largeVariation: some View {
+    var smallVariation: some View {
         HStack(spacing: 10) {
-            Image(model.imageName)
+            model.image
                 .resizable()
                 .frame(width: 90, height: 130)
                 .cornerRadius(10)
@@ -55,9 +55,9 @@ struct MovieCard: View {
 
     }
 
-    var smallVariation: some View {
+    var largeVariation: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Image(model.imageName)
+            model.image
                 .resizable()
                 .frame(width: 150, height: 230)
                 .cornerRadius(10)
@@ -84,15 +84,15 @@ extension MovieCard {
         description: String,
         rate: Double,
         isFavorited: Bool,
-        imageName: String,
+        image: Image,
         onTap: @escaping Action
     ) -> some View {
-        MovieCard(type: .large, model: .init(
+        MovieCard(type: .small, model: .init(
             title: title,
             description: description,
             rate: rate,
             isFavorited: isFavorited,
-            imageName: imageName,
+            image: image,
             onTap: onTap)
         )
     }
@@ -101,15 +101,15 @@ extension MovieCard {
         title: String,
         rate: Double,
         isFavorited: Bool,
-        imageName: String,
+        image: Image,
         onTap: @escaping Action
     ) -> some View {
-        MovieCard(type: .small, model: .init(
+        MovieCard(type: .large, model: .init(
             title: title,
             description: nil,
             rate: rate,
             isFavorited: isFavorited,
-            imageName: imageName,
+            image: image,
             onTap: onTap)
         )
     }
@@ -123,7 +123,7 @@ extension MovieCard {
             description: "Young lion prince Simba, eager to one day become king of the Pride Lands, grows up under the watchful eye of his father Mufasa; all the while his villainous uncle Scar conspires to take the throne for himself. Amid betrayal and tragedy, Simba must confront his past and find his rightful place in the Circle of Life.",
             rate: 7.1,
             isFavorited: true,
-            imageName: "lion",
+            image: Image("lion"),
             onTap: {
                 print("on tap")
             }
@@ -133,7 +133,7 @@ extension MovieCard {
             description: "Young lion prince Simba, eager to one day become king of the Pride Lands, grows up under the watchful eye of his father Mufasa; all the while his villainous uncle Scar conspires to take the throne for himself. Amid betrayal and tragedy, Simba must confront his past and find his rightful place in the Circle of Life.",
             rate: 7.1,
             isFavorited: true,
-            imageName: "lion",
+            image: Image("lion"),
             onTap: {
                 print("on tap")
             }
@@ -147,7 +147,7 @@ extension MovieCard {
             title: "The Lion King",
             rate: 7.1,
             isFavorited: true,
-            imageName: "lion",
+            image: Image("lion"),
             onTap: {
                 print("on tap")
             }
@@ -156,7 +156,7 @@ extension MovieCard {
             title: "The Lion King",
             rate: 7.1,
             isFavorited: true,
-            imageName: "lion",
+            image: Image("lion"),
             onTap: {
                 print("on tap")
             }
