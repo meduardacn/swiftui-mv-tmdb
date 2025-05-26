@@ -14,7 +14,7 @@ extension MovieCard {
         let description: String?
         let rate: Double
         let isFavorited: Bool
-        let imageName: String
+        let image: Image
         let onTap: Action
     }
 
