@@ -6,15 +6,33 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
+    let service = MovieDBMoviesService()
+    @State private var movies: [Movie]?
+
     var body: some View {
         VStack {
-            Image(systemName: "swift")
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text("SwiftUI")
-                .font(.largeTitle)
+            if let movies = movies, !movies.isEmpty {
+                List(movies) { movie in
+                    Text(movie.title)
+                    movie.posterImage
+                        .resizable()
+                        .frame(height: 200)
+
+                }
+            } else {
+                ProgressView()
+                    .frame(height: 200)
+            }
+        }
+        .task {
+            do {
+                try await movies = service.fetchPopularMovies(page: 1)
+            } catch {
+                print(error)
+            }
         }
         .foregroundStyle(.blue)
         .padding()
