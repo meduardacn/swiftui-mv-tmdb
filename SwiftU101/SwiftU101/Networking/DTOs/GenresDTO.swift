@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct GenresDTO: Decodable, Encodable {
+struct GenresDTO: Codable {
     let genres: [ResultsDTO]
 
-    struct ResultsDTO: Decodable, Encodable {
+    struct ResultsDTO: Codable {
         let id: Int
         let name: String
     }

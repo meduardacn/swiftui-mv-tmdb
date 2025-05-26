@@ -10,24 +10,19 @@ import UIKit
 
 struct ContentView: View {
 
-    @EnvironmentObject private var store: Store
-
     var body: some View {
-        NavigationStack {
-            
-            Section(header: Text("Movies")) {
-                List {
-                    ForEach(store.popularMovies ?? []) { movie in
-                        Text(movie.title)
-                    }
-                }
-            }
+        VStack {
+            Text("Hello, SwiftUI101!")
+                .font(.largeTitle)
+            Image(systemName: "swift")
+                .resizable()
+                .frame(width: 100, height: 100)
         }
-        .navigationTitle("The Movie DB")
+        .foregroundStyle(Color.appBlue)
+        .padding()
     }
 }
 
 #Preview {
     ContentView()
-        .environmentObject(Store(moviesService: .mock))
 }

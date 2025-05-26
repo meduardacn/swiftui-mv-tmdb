@@ -8,19 +8,19 @@
 import Foundation
 import SwiftUI
 
-struct MoviesDTO: Decodable, Encodable {
+struct MoviesDTO: Codable {
     let dates: DatesDTO?
     let page: Int
     let results: [MovieDTO]
     let total_pages: Int
     let total_results: Int
 
-    struct DatesDTO: Decodable, Encodable{
+    struct DatesDTO: Codable {
         let maximum: String
         let minimum: String
     }
     
-    struct MovieDTO: Decodable, Encodable {
+    struct MovieDTO: Codable {
         let adult: Bool
         let backdrop_path: String
         let genre_ids: [Int]
