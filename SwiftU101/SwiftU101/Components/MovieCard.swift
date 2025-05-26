@@ -13,13 +13,11 @@ struct MovieCard: View {
     let model: Model
 
     var body: some View {
-        Group {
-            switch type {
-            case .large:
-                largeVariation
-            case .small:
-                smallVariation
-            }
+        switch type {
+        case .large:
+            largeVariation
+        case .small:
+            smallVariation
         }
     }
 
@@ -27,8 +25,9 @@ struct MovieCard: View {
         HStack(spacing: 10) {
             model.image
                 .resizable()
-                .frame(width: 90, height: 130)
+                .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
+                .frame(idealWidth: 80, idealHeight: 120)
 
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.title)
@@ -38,7 +37,6 @@ struct MovieCard: View {
                     Text($0)
                         .lineLimit(3)
                         .foregroundStyle(.gray)
-
                 }
 
                 Button {
@@ -59,11 +57,13 @@ struct MovieCard: View {
         VStack(alignment: .leading, spacing: 8) {
             model.image
                 .resizable()
-                .frame(width: 150, height: 230)
+                .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
 
             Text(model.title)
+                .lineLimit(1)
                 .font(.system(.body, weight: .semibold))
+
             Button {
                 model.onTap()
             } label: {
@@ -73,7 +73,6 @@ struct MovieCard: View {
                 }
                 .foregroundStyle(.gray)
             }
-
         }
     }
 }
