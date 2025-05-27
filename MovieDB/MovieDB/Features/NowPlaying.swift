@@ -9,17 +9,16 @@ import SwiftUI
 
 struct NowPlaying: View {
 
+    @Environment(NowPlayingMoviesStore.self) private var store
     @State private var isLoading: Bool = false
     @State private var searchText: String = ""
 
-    private let provider = NowPlayingMoviesRepository()
-
     private var movies: [Movie] {
-        provider.movies
+        store.movies
     }
 
     private var movieCount: Int {
-        provider.movies.count
+        store.movies.count
     }
 
     var body: some View {
@@ -55,7 +54,7 @@ struct NowPlaying: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             isLoading = true
-            await provider.fetchMovies()
+            await store.fetchMovies()
             isLoading = false
         }
     }
@@ -64,5 +63,7 @@ struct NowPlaying: View {
 #Preview {
     NavigationStack {
         NowPlaying()
+            .environment(NowPlayingMoviesStore(movieService: MockMoviesService())
+        )
     }
 }
