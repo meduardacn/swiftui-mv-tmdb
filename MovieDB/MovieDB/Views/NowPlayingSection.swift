@@ -57,11 +57,7 @@ struct NowPlayingSection: View {
 #Preview {
     List {
         NowPlayingSection()
-            .environment(
-                NowPlayingMoviesStore(
-                    movieService: MockMoviesService()
-                )
-            )
+            .environment(NowPlayingMoviesStore(movieService: .mock))
     }
     .listStyle(.plain)
 }

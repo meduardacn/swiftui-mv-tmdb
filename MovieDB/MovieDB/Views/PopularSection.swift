@@ -50,6 +50,9 @@ struct PopularSection: View {
 }
 
 #Preview {
-    PopularSection()
-        .environment(PopularMoviesStore(movieService: MockMoviesService()))
+    List {
+        PopularSection()
+            .environment(PopularMoviesStore(movieService: .mock))
+    }
+    .listStyle(.plain)
 }

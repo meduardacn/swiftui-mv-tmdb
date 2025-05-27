@@ -23,10 +23,6 @@ struct MainView: View {
 
 #Preview {
     MainView()
-        .environment(
-            NowPlayingMoviesStore(
-//                movieService: MockMoviesService()
-            )
-        )
-        .environment(PopularMoviesStore())
+        .environment(NowPlayingMoviesStore(movieService: .mock))
+        .environment(PopularMoviesStore(movieService: .mock))
 }
