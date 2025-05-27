@@ -27,14 +27,14 @@ struct MovieCard: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
-                .frame(idealWidth: 80, idealHeight: 120)
+                .frame(width: 80, height: 120)
 
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.title)
                     .font(.system(.body, weight: .semibold))
 
-                model.description.map {
-                    Text($0)
+                if let description = model.description {
+                    Text(description)
                         .lineLimit(3)
                         .foregroundStyle(.gray)
                 }
@@ -49,6 +49,7 @@ struct MovieCard: View {
                     .foregroundStyle(.gray)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
 
     }
@@ -74,6 +75,7 @@ struct MovieCard: View {
                 .foregroundStyle(.gray)
             }
         }
+        .frame(width: 150)
     }
 }
 
@@ -84,7 +86,7 @@ extension MovieCard {
         rate: Double,
         isFavorited: Bool,
         image: Image,
-        onTap: @escaping Action
+        onTap: @escaping Action = {}
     ) -> some View {
         MovieCard(type: .small, model: .init(
             title: title,
@@ -101,7 +103,7 @@ extension MovieCard {
         rate: Double,
         isFavorited: Bool,
         image: Image,
-        onTap: @escaping Action
+        onTap: @escaping Action = {}
     ) -> some View {
         MovieCard(type: .large, model: .init(
             title: title,
