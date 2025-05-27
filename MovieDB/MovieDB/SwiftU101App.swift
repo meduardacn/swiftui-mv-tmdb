@@ -14,6 +14,7 @@ struct SwiftU101App: App {
         WindowGroup {
             MainView()
                 .environment(NowPlayingMoviesStore())
+                .environment(PopularMoviesStore())
         }
     }
 }
