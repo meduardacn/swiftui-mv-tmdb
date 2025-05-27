@@ -12,7 +12,8 @@ struct SwiftU101App: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environment(NowPlayingMoviesStore())
         }
     }
 }
