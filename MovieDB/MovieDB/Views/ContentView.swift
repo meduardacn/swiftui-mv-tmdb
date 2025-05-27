@@ -11,18 +11,14 @@ import UIKit
 struct ContentView: View {
 
     var body: some View {
-        VStack {
-            Text("Hello, SwiftUI101!")
-                .font(.largeTitle)
-            Image(systemName: "swift")
-                .resizable()
-                .frame(width: 100, height: 100)
+        NavigationStack {
+            MainView()
         }
-        .foregroundStyle(Color.appBlue)
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .environment(NowPlayingMoviesStore(movieService: .mock))
+        .environment(PopularMoviesStore(movieService: .mock))
 }

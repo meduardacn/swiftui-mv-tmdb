@@ -10,14 +10,13 @@ import SwiftUI
 struct MainView: View {
 
     var body: some View {
-        NavigationStack {
-            List {
-                NowPlayingSection()
-                PopularSection()
-            }
-            .listStyle(.plain)
-            .navigationTitle("The MovieDB")
+        List {
+            NowPlayingSection()
+            PopularSection()
         }
+        .listStyle(.plain)
+        .navigationTitle("The MovieDB")
+
     }
 }
 
