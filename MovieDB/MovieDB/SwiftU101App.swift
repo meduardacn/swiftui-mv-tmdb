@@ -10,6 +10,11 @@ import SwiftUI
 @main
 struct SwiftU101App: App {
 
+    init() {
+        URLCache.shared.memoryCapacity = 300_000_000 // ~10 MB memory space
+        URLCache.shared.diskCapacity = 1_000_000_000 // ~1GB disk cache space
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
