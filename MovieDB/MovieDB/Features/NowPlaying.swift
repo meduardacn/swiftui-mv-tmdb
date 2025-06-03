@@ -31,7 +31,6 @@ struct NowPlaying: View {
 
             LazyVGrid(
                 columns: [.init(), .init()],
-                alignment: .leading,
                 spacing: 22
             ) {
                 ForEach(movies) { movie in
@@ -39,10 +38,8 @@ struct NowPlaying: View {
                         title: movie.title,
                         rate: movie.voteAverage,
                         isFavorited: false,
-                        image: movie.posterImage,
-                        onTap: {}
+                        imageURL: movie.posterImageURL
                     )
-                    .padding(.horizontal)
                 }
             }
         }

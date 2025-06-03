@@ -23,11 +23,16 @@ struct MovieCard: View {
 
     var smallVariation: some View {
         HStack(spacing: 10) {
-            model.image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(10)
-                .frame(width: 80, height: 120)
+            AsyncImage(url: model.imageURL) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 80, height: 120)
+            .background(.gray.opacity(0.1))
+            .cornerRadius(10)
 
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.title)
@@ -56,10 +61,16 @@ struct MovieCard: View {
 
     var largeVariation: some View {
         VStack(alignment: .leading, spacing: 8) {
-            model.image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(10)
+            AsyncImage(url: model.imageURL) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 152, height: 229)
+            .background(.gray.opacity(0.1))
+            .cornerRadius(10)
 
             Text(model.title)
                 .lineLimit(1)
@@ -85,16 +96,19 @@ extension MovieCard {
         description: String,
         rate: Double,
         isFavorited: Bool,
-        image: Image,
+        imageURL: URL?,
         onTap: @escaping Action = {}
     ) -> some View {
-        MovieCard(type: .small, model: .init(
-            title: title,
-            description: description,
-            rate: rate,
-            isFavorited: isFavorited,
-            image: image,
-            onTap: onTap)
+        MovieCard(
+            type: .small,
+            model: .init(
+                title: title,
+                description: description,
+                rate: rate,
+                isFavorited: isFavorited,
+                imageURL: imageURL,
+                onTap: onTap
+            )
         )
     }
 
@@ -102,16 +116,19 @@ extension MovieCard {
         title: String,
         rate: Double,
         isFavorited: Bool,
-        image: Image,
+        imageURL: URL?,
         onTap: @escaping Action = {}
     ) -> some View {
-        MovieCard(type: .large, model: .init(
-            title: title,
-            description: nil,
-            rate: rate,
-            isFavorited: isFavorited,
-            image: image,
-            onTap: onTap)
+        MovieCard(
+            type: .large,
+            model: .init(
+                title: title,
+                description: nil,
+                rate: rate,
+                isFavorited: isFavorited,
+                imageURL: imageURL,
+                onTap: onTap
+            )
         )
     }
 }
@@ -124,7 +141,7 @@ extension MovieCard {
             description: "Young lion prince Simba, eager to one day become king of the Pride Lands, grows up under the watchful eye of his father Mufasa; all the while his villainous uncle Scar conspires to take the throne for himself. Amid betrayal and tragedy, Simba must confront his past and find his rightful place in the Circle of Life.",
             rate: 7.1,
             isFavorited: true,
-            image: Image("lion"),
+            imageURL: .init(string: "https://placehold.co/600x400"),
             onTap: {
                 print("on tap")
             }
@@ -134,7 +151,7 @@ extension MovieCard {
             description: "Young lion prince Simba, eager to one day become king of the Pride Lands, grows up under the watchful eye of his father Mufasa; all the while his villainous uncle Scar conspires to take the throne for himself. Amid betrayal and tragedy, Simba must confront his past and find his rightful place in the Circle of Life.",
             rate: 7.1,
             isFavorited: true,
-            image: Image("lion"),
+            imageURL: .init(string: "https://placehold.co/600x400"),
             onTap: {
                 print("on tap")
             }
@@ -148,7 +165,7 @@ extension MovieCard {
             title: "The Lion King",
             rate: 7.1,
             isFavorited: true,
-            image: Image("lion"),
+            imageURL: .init(string: "https://placehold.co/600x400"),
             onTap: {
                 print("on tap")
             }
@@ -157,7 +174,7 @@ extension MovieCard {
             title: "The Lion King",
             rate: 7.1,
             isFavorited: true,
-            image: Image("lion"),
+            imageURL: .init(string: "https://placehold.co/600x400"),
             onTap: {
                 print("on tap")
             }

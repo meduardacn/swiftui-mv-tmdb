@@ -27,7 +27,7 @@ struct PopularSection: View {
                         description: movie.overview,
                         rate: movie.voteAverage,
                         isFavorited: false,
-                        image: movie.posterImage
+                        imageURL: movie.posterImageURL
                     )
                 }
             }

@@ -14,6 +14,6 @@ public struct Movie: Sendable, Identifiable {
     public let overview: String
     public let releaseDate: Date?
     public let voteAverage: Double
-    public let genres: [Genre] //TODO: review this
-    public let posterImage: Image //TODO: review this
+    public let genres: [Genre]
+    public let posterImageURL: URL?
 }

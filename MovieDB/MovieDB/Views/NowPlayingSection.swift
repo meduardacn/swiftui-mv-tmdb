@@ -27,7 +27,7 @@ struct NowPlayingSection: View {
                             title: movie.title,
                             rate: movie.voteAverage,
                             isFavorited: false,
-                            image: movie.posterImage
+                            imageURL: movie.posterImageURL
                         )
                     }
                 }

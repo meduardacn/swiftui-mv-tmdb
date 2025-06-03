@@ -39,13 +39,13 @@ struct MoviesDTO: Codable {
 }
 
 extension Movie {
-    init (from dto: MoviesDTO.MovieDTO, image: Image, genres: [Genre]) {
+    init(from dto: MoviesDTO.MovieDTO, imageURL: URL?, genres: [Genre]) {
         self.id = dto.id
         self.title = dto.title
         self.overview = dto.overview
         self.releaseDate = dto.release_date
         self.voteAverage = dto.vote_average
         self.genres = genres
-        self.posterImage = image
+        self.posterImageURL = imageURL
     }
 }

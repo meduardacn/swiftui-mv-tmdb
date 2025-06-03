@@ -45,5 +45,11 @@ extension URLBuilder where Self == BaseURLBuilder {
 extension URLBuilder where Self == ImageURLBuilder {
     static func imageUrl(path: String) -> Self {
         ImageURLBuilder(path: path)
+}
+
+extension URL {
+
+    init(_ urlBuilder: URLBuilder) throws {
+        self = try urlBuilder.buildUrl()
     }
 }
