@@ -9,7 +9,6 @@ import Observation
 
 @Observable
 final class PopularMoviesStore {
-
     private(set) var movies: [Movie] = []
 
     private let movieService: any MoviesService

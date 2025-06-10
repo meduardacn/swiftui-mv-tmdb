@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct MovieCard: View {
     let type: `Type`
     let model: Model
@@ -36,7 +35,7 @@ struct MovieCard: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.title)
-                    .font(.system(.body, weight: .semibold))
+                    .fontWeight(.semibold)
 
                 if let description = model.description {
                     Text(description)
@@ -74,7 +73,7 @@ struct MovieCard: View {
 
             Text(model.title)
                 .lineLimit(1)
-                .font(.system(.body, weight: .semibold))
+                .fontWeight(.semibold)
 
             Button {
                 model.onTap()

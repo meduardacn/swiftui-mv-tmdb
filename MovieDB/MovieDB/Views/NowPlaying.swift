@@ -10,11 +10,15 @@ import SwiftUI
 struct NowPlaying: View {
 
     @Environment(NowPlayingMoviesStore.self) private var store
+    @State private var currentPage: Int = 0
     @State private var isLoading: Bool = false
     @State private var searchText: String = ""
 
     private var movies: [Movie] {
-        store.movies
+        store.movies.filter {
+            searchText.isEmpty ||
+            $0.title.lowercased().contains(searchText.lowercased())
+        }
     }
 
     private var movieCount: Int {
@@ -40,8 +44,15 @@ struct NowPlaying: View {
                         isFavorited: false,
                         imageURL: movie.posterImageURL
                     )
+                    .redacted(reason: isLoading ? .placeholder : [])
                 }
             }
+
+            Color.clear
+                .onScrollVisibilityChange { isVisible in
+                    guard isVisible else { return }
+                    Task { await fetchMovies() }
+                }
         }
         .searchable(
             text: $searchText,
@@ -50,17 +61,23 @@ struct NowPlaying: View {
         .navigationTitle("Now Playing")
         .navigationBarTitleDisplayMode(.inline)
         .task {
-            isLoading = true
-            await store.fetchMovies()
-            isLoading = false
+            await fetchMovies()
         }
+    }
+
+    private func fetchMovies() async {
+        guard !isLoading else { return }
+        isLoading = true
+        let nextPage = currentPage + 1
+        await store.fetchMovies(page: nextPage)
+        currentPage = nextPage
+        isLoading = false
     }
 }
 
 #Preview {
     NavigationStack {
         NowPlaying()
-            .environment(NowPlayingMoviesStore(movieService: MockMoviesService())
-        )
+            .environment(NowPlayingMoviesStore())
     }
 }

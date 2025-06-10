@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NowPlayingSection: View {
-
+    
     @Environment(NowPlayingMoviesStore.self)
     private var nowPlayingMoviesStore
 
@@ -17,7 +17,7 @@ struct NowPlayingSection: View {
     private var nowPlayingMovies: [Movie] {
         Array(nowPlayingMoviesStore.movies.prefix(10))
     }
-    
+
     var body: some View {
         Section {
             ScrollView(.horizontal, showsIndicators: false) {

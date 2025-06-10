@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import UIKit
 
 public protocol MoviesService {
     func fetchNowPlayingMovies(page: Int) async throws -> [Movie]
