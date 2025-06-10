@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import UIKit
 
 public protocol MoviesService {
     func fetchNowPlayingMovies(page: Int) async throws -> [Movie]
@@ -39,36 +38,33 @@ public actor MovieDBMoviesService: MoviesService {
     }
 
     private func fetchMovies(endpoint: Endpoint) async throws -> [Movie] {
-        let genres = try await fetchMovieGenres() // TODO: this can be improved
+        let genres = try await fetchMovieGenres()
         let response: MoviesDTO = try await client.response(for: endpoint)
-        let moviesIDs: [Int] = response.results.map { $0.id }
+        let movieIDs: [Int] = response.results.map { $0.id }
 
-        return try await withThrowingTaskGroup(of: Movie.self) { group in
-            var movies = [Movie]()
-            movies.reserveCapacity(response.results.count)
-
-            for movieDTO in response.results {
-                group.addTask {
-                    async let image: UIImage = self.client.image(for: .fetchImage(filePath: movieDTO.poster_path))
-                    let genres: [Genre] = genres.filter { movieDTO.genre_ids.contains($0.id) }
-                    return Movie(from: movieDTO, image: Image(uiImage: try await image), genres: genres)
+        let movies = response.results
+            .map { movieDTO in
+                let genres = genres.filter {
+                    movieDTO.genre_ids.contains($0.id)
                 }
-            }
 
-            for try await movie in group {
-                movies.append(movie)
+                return Movie(
+                    from: movieDTO,
+                    imageURL: try? URL(
+                        .imageUrl(path: movieDTO.poster_path, maxWidth: 300)
+                    ),
+                    genres: genres
+                )
             }
-
-            movies = movies.sorted { (a,b) -> Bool in
-                if let first = moviesIDs.firstIndex(of: a.id),
-                   let second = moviesIDs.firstIndex(of: b.id) {
+            .sorted { (a,b) -> Bool in
+                if let first = movieIDs.firstIndex(of: a.id),
+                   let second = movieIDs.firstIndex(of: b.id) {
                     return first < second
                 }
                 return false
             }
 
-            return movies
-        }
+        return movies
     }
 
 }
