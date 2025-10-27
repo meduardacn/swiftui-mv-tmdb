@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public protocol MoviesService {
+public protocol MoviesService: Sendable {
     func fetchNowPlayingMovies(page: Int) async throws -> [Movie]
     func fetchPopularMovies(page: Int) async throws -> [Movie]
     func serchMovies(query: String, page: Int) async throws -> [Movie]

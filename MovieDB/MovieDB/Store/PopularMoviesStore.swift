@@ -7,6 +7,7 @@
 
 import Observation
 
+@MainActor
 @Observable
 final class PopularMoviesStore {
     private(set) var movies: [Movie] = []
@@ -22,7 +23,7 @@ final class PopularMoviesStore {
 
         do {
             let result = try await movieService.fetchPopularMovies(page: 1)
-            await self.setMovies(result)
+            self.setMovies(result)
         } catch {
             debugPrint(">>> Error fetching popular movies: \(error)")
         }

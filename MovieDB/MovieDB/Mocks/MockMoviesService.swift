@@ -7,18 +7,38 @@
 
 import Foundation
 
-public class MockMoviesService: MoviesService {
+public final class MockMoviesService: MoviesService, @unchecked Sendable {
+    
     public typealias NowPlayingMoviesProvider = @Sendable (Int) async throws -> [Movie]
     public typealias PopularMoviesProvider = @Sendable (Int) async throws -> [Movie]
     public typealias SearchMoviesProvider = @Sendable (Int) async throws -> [Movie]
     public typealias MovieGenresProvider = @Sendable () async throws -> [Genre]
 
-    public var providerNowPlayingMovies: NowPlayingMoviesProvider = { _ in [.mock] }
-    public var providerPopularMovies: PopularMoviesProvider = { _ in [.mock] }
-    public var providerSearchMovies: SearchMoviesProvider = { _ in [.mock] }
-    public var providerMovieGenres: MovieGenresProvider = { [.family] }
+    public let providerNowPlayingMovies: NowPlayingMoviesProvider
+    public let providerPopularMovies: PopularMoviesProvider
+    public let providerSearchMovies: SearchMoviesProvider
+    public let providerMovieGenres: MovieGenresProvider
 
-    public init() {}
+    public init(
+        providerNowPlayingMovies: @escaping NowPlayingMoviesProvider,
+        providerPopularMovies: @escaping PopularMoviesProvider,
+        providerSearchMovies: @escaping SearchMoviesProvider,
+        providerMovieGenres: @escaping MovieGenresProvider
+    ) {
+        self.providerNowPlayingMovies = providerNowPlayingMovies
+        self.providerPopularMovies = providerPopularMovies
+        self.providerSearchMovies = providerSearchMovies
+        self.providerMovieGenres = providerMovieGenres
+    }
+
+    public convenience init() {
+        self.init(
+            providerNowPlayingMovies: { _ in [.mock] },
+            providerPopularMovies: { _ in [.mock] },
+            providerSearchMovies: { _ in [.mock] },
+            providerMovieGenres: { [.family] }
+        )
+    }
 
     public enum MockMoviesError: Error {
         case failToFetchNowPlayingMovies

@@ -7,6 +7,7 @@
 
 import Observation
 
+@MainActor
 @Observable
 final class NowPlayingMoviesStore {
 
@@ -23,13 +24,12 @@ final class NowPlayingMoviesStore {
 
         do {
             let result = try await movieService.fetchNowPlayingMovies(page: page)
-            await self.setMovies(result)
+            self.setMovies(result)
         } catch {
             debugPrint(">>> Error fetching now playing movies: \(error)")
         }
     }
 
-    @MainActor
     private func setMovies(_ movies: [Movie]) {
         debugPrint(">>> Set now playing movies: \(movies.map(\.title))")
         self.movies.append(contentsOf: movies)
