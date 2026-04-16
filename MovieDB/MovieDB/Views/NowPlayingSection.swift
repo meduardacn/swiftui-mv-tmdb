@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct NowPlayingSection: View {
-    
-    @Environment(NowPlayingMoviesStore.self)
-    private var nowPlayingMoviesStore
+    @Environment(AnalyticsManager.self) var analyticsManager
+    @Environment(NowPlayingMoviesStore.self) var nowPlayingMoviesStore
 
     @State private var isLoading: Bool = false
 
@@ -43,6 +42,9 @@ struct NowPlayingSection: View {
                 Spacer()
                 NavigationLink("See All", destination: NowPlaying())
                     .font(.callout)
+                    .task {
+                        analyticsManager.track(.buttonTap(withText: "See All"))
+                    }
             }
         }
         .listSectionSeparator(.hidden)
@@ -58,6 +60,7 @@ struct NowPlayingSection: View {
     List {
         NowPlayingSection()
             .environment(NowPlayingMoviesStore(movieService: .mock))
+            .environment(AnalyticsManager())
     }
     .listStyle(.plain)
 }
