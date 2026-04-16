@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(AnalyticsManager.self) var analyticsManager
+
     var body: some View {
         List {
             NowPlayingSection()
@@ -27,5 +28,5 @@ struct MainView: View {
     MainView()
         .environment(NowPlayingMoviesStore(movieService: .mock))
         .environment(PopularMoviesStore(movieService: .mock))
-        .environment(AnalyticsManager())
+        .environment(AnalyticsManager(provider: FirebaseProvider()))
 }

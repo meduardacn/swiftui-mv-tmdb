@@ -14,11 +14,6 @@ struct ButtonTapEvent: AnalyticsEvent {
             "buttonText": buttonText
         ]
     }
-
-    func track() {
-        guard let properties else { return }
-        properties.forEach { print("\($0.key): \($0.value, default: "")") }
-    }
 }
 
 extension AnalyticsEvent where Self == ButtonTapEvent {

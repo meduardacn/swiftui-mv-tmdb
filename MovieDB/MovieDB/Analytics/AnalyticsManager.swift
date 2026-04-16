@@ -10,8 +10,13 @@ import Combine
 
 @Observable
 class AnalyticsManager {
-    func track(_ event: any AnalyticsEvent) {
+    private let provider: AnalyticsProtocol
 
-        event.track()
+    init(provider: AnalyticsProtocol) {
+        self.provider = provider
+    }
+
+    func track(_ event: any AnalyticsEvent) {
+        provider.track(event: event)
     }
 }

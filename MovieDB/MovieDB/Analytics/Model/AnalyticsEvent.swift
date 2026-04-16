@@ -13,5 +13,4 @@ public typealias AnalyticsEventProperties = [String: Any?]
 protocol AnalyticsEvent {
     var name: AnalyticsEventName { get }
     var properties: AnalyticsEventProperties? { get }
-    func track()
 }

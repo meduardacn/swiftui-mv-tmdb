@@ -20,7 +20,7 @@ struct MovieDBApp: App {
             ContentView()
                 .environment(NowPlayingMoviesStore())
                 .environment(PopularMoviesStore())
-                .environment(AnalyticsManager())
+                .environment(AnalyticsManager(provider: FirebaseProvider()))
         }
     }
 }

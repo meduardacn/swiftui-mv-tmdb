@@ -60,7 +60,7 @@ struct NowPlayingSection: View {
     List {
         NowPlayingSection()
             .environment(NowPlayingMoviesStore(movieService: .mock))
-            .environment(AnalyticsManager())
+            .environment(AnalyticsManager(provider: MockProvider()))
     }
     .listStyle(.plain)
 }
