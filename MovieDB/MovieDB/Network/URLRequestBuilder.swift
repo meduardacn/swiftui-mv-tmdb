@@ -65,7 +65,6 @@ class URLRequestBuilder {
         precondition(request.url != nil, "URLRequest must have a valid URL")
         precondition(request.httpMethod != nil, "URLRequest must have an HTTP method")
         precondition(request.timeoutInterval > 0,"Timeout must be positive, got \(request.timeoutInterval)")
-
         return request
     }
 }
