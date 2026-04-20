@@ -25,22 +25,11 @@ class URLRequestBuilder {
     }
 
     @discardableResult
-    func header(_ key: String, _ value: String) -> Self {
-        self.headers[key] = value
-        return self
-    }
-
-    @discardableResult
     func headers(_ headers: [String: String]) -> Self {
         self.headers.merge(headers) { current, new in new }
         return self
     }
 
-    @discardableResult
-    func body(_ data: Data) -> Self {
-        self.body = data
-        return self
-    }
 
     @discardableResult
     func timeout(_ seconds: TimeInterval) -> Self {

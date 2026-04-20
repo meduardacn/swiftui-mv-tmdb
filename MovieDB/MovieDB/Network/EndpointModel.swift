@@ -8,9 +8,9 @@
 import Foundation
 
 struct Endpoint: Sendable {
-    public let url: URLBuilder
-    public let headers: HeaderPolicy
-    public let method: HTTPMethod
+    private let url: URLBuilder
+    private let headers: HeaderPolicy
+    private let method: HTTPMethod
     private var timeout: TimeInterval
 
     init(url: URLBuilder, headers: HeaderPolicy, method: HTTPMethod, timeout: TimeInterval = 60) {
