@@ -8,19 +8,24 @@
 import Foundation
 import SwiftUI
 
-struct NetworkClient: Sendable {
-    private var dataFetcher: DataFetcher
+public struct NetworkClient: Sendable {
 
-    public init(dataFetcher: DataFetcher = URLSession.shared) {
-        self.dataFetcher = dataFetcher
+    var fetcher: DataFetcher
+
+    private init(fetcher: DataFetcher) {
+        self.fetcher = fetcher
     }
+
+    public static let shared: NetworkClient = {
+        .init(fetcher: URLSession.shared)
+    }()
 
     private func response<Response>(
         for endpoint: Endpoint,
         transform: (Data) throws -> Response
     ) async throws -> Response {
         let request = try await endpoint.request()
-        let data = try await dataFetcher.fetch(for: request)
+        let data = try await fetcher.fetch(for: request)
         return try transform(data)
     }
 

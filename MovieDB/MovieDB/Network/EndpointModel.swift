@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Endpoint: Sendable {
+public struct Endpoint: Sendable {
     private let url: URLBuilder
     private let headers: HeaderPolicy
     private let method: HTTPMethod

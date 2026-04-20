@@ -16,9 +16,11 @@ public protocol MoviesService: Sendable {
 }
 
 public actor MovieDBMoviesService: MoviesService {
-    private let client = NetworkClient()
+    private let client: NetworkClient
 
-    public init() {}
+    public init(client: NetworkClient = .shared) {
+        self.client = client
+    }
 
     public func fetchMovieGenres() async throws -> [Genre] {
         let response: GenresDTO = try await client.response(for: .fetchMoviesGenres())
