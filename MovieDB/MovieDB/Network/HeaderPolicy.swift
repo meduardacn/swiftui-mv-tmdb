@@ -5,31 +5,28 @@
 //  Created by Maria Casanova on 5/23/25.
 //
 
-
 public enum APIHeaderKey: String {
     case accept = "accept"
     case authorization = "Authorization"
 }
 
 public protocol HeaderPolicy: Sendable {
-    func generateHeaders() throws -> [String: String]
+    func buildHeaders() throws -> [String: String]
 }
 
 struct EmptyHeaderPolicy: HeaderPolicy {
-    func generateHeaders() throws -> [String: String] { [:] }
+    func buildHeaders() throws -> [String: String] { [:] }
 }
 
 struct PrimaryPolicy: HeaderPolicy {
 
-
     let apiKey: String
 
-    // TODO: add Secrets
     init(apiKey: String) {
         self.apiKey = apiKey
     }
 
-    func generateHeaders() throws -> [String: String] {
+    func buildHeaders() throws -> [String: String] {
         let headers = [
             APIHeaderKey.accept.rawValue: "application/json",
             APIHeaderKey.authorization.rawValue: "Bearer \(apiKey)"
@@ -43,7 +40,6 @@ extension HeaderPolicy where Self == EmptyHeaderPolicy {
 }
 
 extension HeaderPolicy where Self == PrimaryPolicy {
-
     static var primary: Self {
         @Secret(\.apiKey) var key: String
         return PrimaryPolicy(apiKey: key)
