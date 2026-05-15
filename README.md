@@ -1,6 +1,6 @@
 # 🎬 MovieDB
 
-A SwiftUI iOS app for browsing movies using [The Movie Database (TMDB) API](https://www.themoviedb.org/documentation/api).
+A SwiftUI iOS app for browsing and renting movies using [The Movie Database (TMDB) API](https://www.themoviedb.org/documentation/api).
 
 ## ✨ Features
 
@@ -8,16 +8,18 @@ A SwiftUI iOS app for browsing movies using [The Movie Database (TMDB) API](http
 - 🖼️ Movie cards with poster images and metadata
 - 📄 Paginated API responses
 - 🏷️ Movie genres support
+- 💳 Rent movies via **Pix**, **PayPal**, or **Credit Card** (Stripe)
 - 📊 Analytics event tracking (screen views and button taps)
 
 ## 🏛️ Architecture
 
 The app follows the **MV (Model-View)** pattern — a SwiftUI-native approach where `@Observable` models hold state and business logic, and views observe them directly without a separate ViewModel layer.
 
-- **Models** — `@Observable` stores that own state and drive the UI (`NowPlayingMoviesStore`, `PopularMoviesStore`)
+- **Models** — `@Observable` stores that own state and drive the UI (`NowPlayingMoviesStore`, `PopularMoviesStore`, `PaymentStore`)
 - **Views** — SwiftUI views that observe models and render state
 - **Network** — Protocol-based service layer with type-safe endpoint routing and DTO mapping
-- **Analytics** — Pluggable analytics providers via `AnalyticsProtocol`
+- **Payment** — Pluggable payment providers via `PaymentProtocol` (Stripe, PayPal, Pix)
+- **Analytics** — Pluggable analytics providers via `AnalyticsProtocol`; supports multiple simultaneous providers
 
 ### 🔑 Key patterns
 
@@ -25,6 +27,9 @@ The app follows the **MV (Model-View)** pattern — a SwiftUI-native approach wh
 - Protocol-based services for testability and mocking
 - Endpoint-based URL building with `URLRequestBuilder`
 - Generic `ViewState<Value>` for async loading states
+- Typed `NavigationStack` routing via `MovieDetailRoute` / `NowPlayingRoute`
+- Pluggable payment providers registered per `PaymentMethod`
+- Structured logging with composable decorators (`TimestampLoggable`, `SeverityLoggable`, `FilterLoggable`)
 - URLCache configured with 300 MB memory / 1 GB disk
 
 ## 📁 Project Structure
@@ -32,11 +37,19 @@ The app follows the **MV (Model-View)** pattern — a SwiftUI-native approach wh
 ```
 MovieDB/
 ├── Analytics/          # Analytics manager, events, and providers
-├── Components/         # Reusable UI components (MovieCard)
-├── Helpers/            # Utilities (date formatter, logging, view state)
-├── Models/             # Domain models (Movie, Genre)
-├── Mocks/              # Mock data and services for previews/tests
+│   ├── Events/
+│   └── Providers/
+├── Components/         # Reusable UI components (MovieCard, BaseSection)
+├── Domain/
+│   ├── Mocks/          # Mock data for previews and tests
+│   └── Models/         # Domain models (Movie, Genre, Currency)
+├── Helpers/
+│   └── Logger/         # Structured logging (OSLoggable, decorators)
 ├── Network/            # Network client, endpoints, DTOs, services
+│   └── Mocks/          # MockMoviesService
+├── Payment/            # Payment manager, protocol, and providers
+│   └── Providers/      # Stripe, PayPal, Pix, Mock
+├── Routes/             # Typed navigation routes
 ├── Store/              # Observable state stores (MV models)
 └── Views/              # SwiftUI views
 ```
