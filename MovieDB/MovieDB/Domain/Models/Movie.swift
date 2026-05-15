@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct Movie: Sendable, Identifiable {
+public struct Movie: Sendable, Identifiable, Hashable {
     public let id: Int
     public let title: String
     public let overview: String
@@ -16,4 +16,5 @@ public struct Movie: Sendable, Identifiable {
     public let voteAverage: Double
     public let genres: [Genre]
     public let posterImageURL: URL?
+    public let price: Decimal
 }

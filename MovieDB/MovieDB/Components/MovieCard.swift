@@ -36,6 +36,7 @@ struct MovieCard: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text(model.title)
                     .fontWeight(.semibold)
+                    .foregroundStyle(.black)
 
                 if let description = model.description {
                     Text(description)
@@ -55,7 +56,13 @@ struct MovieCard: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-
+        .padding(12)
+        .background(Color.appBlue.opacity(0.3))
+        .cornerRadius(12)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(.gray.opacity(0.3) ,lineWidth: 1)
+        }
     }
 
     var largeVariation: some View {

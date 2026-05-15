@@ -8,7 +8,6 @@
 import Foundation
 
 public final class MockMoviesService: MoviesService, @unchecked Sendable {
-    
     public typealias NowPlayingMoviesProvider = @Sendable (Int) async throws -> [Movie]
     public typealias PopularMoviesProvider = @Sendable (Int) async throws -> [Movie]
     public typealias SearchMoviesProvider = @Sendable (Int) async throws -> [Movie]

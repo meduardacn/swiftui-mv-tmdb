@@ -10,28 +10,29 @@ import Observation
 @MainActor
 @Observable
 final class NowPlayingMoviesStore {
-
+    private let movieService: any MoviesService
     private(set) var movies: [Movie] = []
 
-    private let movieService: any MoviesService
+    var isLoading = false
+    var storeError: String?
 
     init(movieService: any MoviesService = .shared()) {
         self.movieService = movieService
     }
 
     func fetchMovies(page: Int = 1) async {
-        debugPrint(">>> Fetching now playing movies...")
-
         do {
+            isLoading = true
             let result = try await movieService.fetchNowPlayingMovies(page: page)
             self.setMovies(result)
+            isLoading = false
         } catch {
-            debugPrint(">>> Error fetching now playing movies: \(error)")
+            isLoading = false
+            storeError = "Failed to fetch now playing movies with error: \(error)"
         }
     }
 
     private func setMovies(_ movies: [Movie]) {
-        debugPrint(">>> Set now playing movies: \(movies.map(\.title))")
         self.movies.append(contentsOf: movies)
     }
 }

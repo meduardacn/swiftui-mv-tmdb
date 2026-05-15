@@ -6,17 +6,16 @@
 //
 
 import Foundation
-import Combine
 
 @Observable
-class AnalyticsManager {
-    private let provider: AnalyticsProtocol
+final class AnalyticsManager {
+    private let providers: [AnalyticsProtocol]
 
-    init(provider: AnalyticsProtocol) {
-        self.provider = provider
+    init(providers: [AnalyticsProtocol]) {
+        self.providers = providers
     }
 
     func track(_ event: any AnalyticsEvent) {
-        provider.track(event: event)
+        providers.forEach { $0.track(event: event) }
     }
 }

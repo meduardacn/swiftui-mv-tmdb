@@ -58,7 +58,7 @@ extension URLSession: DataFetcher {
             stringValue = String(data: mappedData, encoding: .utf8) ?? "could not parse to json"
         }
 
-        Log.network.debug(
+        AppLoggers.shared.network.log(
             """
             [Request Logger]
             REQUEST: "\(url)"

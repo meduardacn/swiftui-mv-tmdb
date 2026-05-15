@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Genre: Sendable{
+public struct Genre: Sendable, Hashable {
     public let id: Int
     public let name: String
 }

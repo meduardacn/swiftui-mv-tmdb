@@ -7,11 +7,10 @@
 
 import Foundation
 
-
 struct FirebaseProvider: AnalyticsProtocol {
     func track(event: any AnalyticsEvent) {
-        print("FIRABASE:")
         guard let properties = event.properties else { return }
-        properties.forEach { print("\($0.key): \($0.value, default: "")") }
+        let body = properties.map { "\($0.key): \($0.value ?? "nil")" }.joined(separator: "\n")
+        AppLoggers.shared.analytics.log("FIREBASE\n\(body)")
     }
 }

@@ -10,28 +10,30 @@ import Observation
 @MainActor
 @Observable
 final class PopularMoviesStore {
+    private let movieService: any MoviesService
     private(set) var movies: [Movie] = []
 
-    private let movieService: any MoviesService
+    var isLoading = false
+    var storeError: String?
 
     init(movieService: any MoviesService = .shared()) {
         self.movieService = movieService
     }
 
     func fetchMovies() async {
-        debugPrint(">>> Fetching popular movies...")
-
         do {
+            isLoading = true
             let result = try await movieService.fetchPopularMovies(page: 1)
             self.setMovies(result)
+            isLoading = false
         } catch {
-            debugPrint(">>> Error fetching popular movies: \(error)")
+            isLoading = false
+            storeError = "Failed to fetch popular movies with error: \(error)."
         }
     }
 
     @MainActor
     private func setMovies(_ movies: [Movie]) {
-        debugPrint(">>> Set popular movies: \(movies.map(\.title))")
         self.movies = movies
     }
 }

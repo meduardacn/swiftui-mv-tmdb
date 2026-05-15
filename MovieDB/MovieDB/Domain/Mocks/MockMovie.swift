@@ -16,7 +16,8 @@ extension Movie {
             releaseDate: MockDate.mock("1994-06-15"),
             voteAverage: 8.3,
             genres: [.family, .animation, .drama],
-            posterImageURL: .init(string: "https://placehold.co/600x400")
+            posterImageURL: .init(string: "https://placehold.co/600x400"),
+            price: Decimal(string: "3.99") ?? 0
         )
     }
 }

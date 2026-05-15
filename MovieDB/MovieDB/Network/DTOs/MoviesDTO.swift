@@ -47,5 +47,6 @@ extension Movie {
         self.voteAverage = dto.vote_average
         self.genres = genres
         self.posterImageURL = imageURL
+        self.price = Decimal(string: "9.99") ?? 0
     }
 }
